@@ -11,7 +11,15 @@
       <meetings-page :username="authenticatedUsername"></meetings-page>
     </div>
     <div v-else>
-      <login-form @login="login($event)"></login-form>
+
+      <button @click="registering=false" :class="registering ? 'button button-clear' : ''" > Zaloguj </button>
+      <button  @click="registering=true" :class="registering ? '' : 'button button-clear'" > Zarejestruj </button>
+
+      <div v-if="errorMessage">{{ errorMessage}}</div>
+      <div v-if="successMessage">{{successMessage}}</div>
+
+      <login-form @login="login($event)" v-if="registering==false"></login-form>
+      <login-form @login="register($event)" v-else button-label="Zarejestruj się"></login-form>
     </div>
   </div>
 </template>
@@ -25,7 +33,10 @@
         components: {LoginForm, MeetingsPage},
         data() {
             return {
-                authenticatedUsername: ""
+              registering: false,
+                authenticatedUsername: "",
+              errorMessage: ' ',
+              successMessage: ' ',
             };
         },
         methods: {
@@ -34,7 +45,22 @@
             },
             logout() {
                 this.authenticatedUsername = '';
-            }
+            },
+          register(user){
+              this.successMessage = '';
+              this.errorMessage = '';
+              this.$http.post("participants", user)
+            .then(response=> {
+              this.succcessMessage = 'Super, masz już konto';
+              // udało się
+            })
+            .catch(response=>{
+              console.log(response);
+              this.errorMessage = 'Nie udało sie'
+              // nie udało się
+            });
+
+          }
         }
     };
 </script>
