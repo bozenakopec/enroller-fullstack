@@ -1,15 +1,15 @@
 <template>
   <div>
     <form @submit.prevent="addNewMeeting()" v-if="adding">
-      <h3>Dodaj nowe spotkanie</h3>
+      <h3>Dodaj spotkanie</h3>
       <label>Nazwa</label>
       <input type="text" v-model="newMeeting.name">
       <label>Opis</label>
       <textarea v-model="newMeeting.description"></textarea>
-      <button>Dodaj</button>
-      <span class="error" v-if="error">Spotkanie musi mieć nazwę!</span>
+      <button>Dodaj spotkkanie</button>
+      <span class="error" v-if="error">Nie mozesz dodac spotkania bez nazwy!</span>
     </form>
-    <button @click="adding = true" v-else>Dodaj nowe spotkanie</button>
+    <button @click="adding = true" v-else>Dodaj spotkanie</button>
   </div>
 </template>
 
@@ -39,6 +39,6 @@
 
 <style scoped>
   .error {
-    color: #F00;
+    color: #CD5C5C;
   }
 </style>

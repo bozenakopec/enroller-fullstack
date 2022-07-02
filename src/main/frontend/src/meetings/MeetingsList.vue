@@ -2,7 +2,7 @@
   <table v-if="meetings.length > 0">
     <thead>
     <tr>
-      <th>Nazwa spotkania</th>
+      <th>Nazwa </th>
       <th>Opis</th>
       <th>Uczestnicy</th>
       <td></td>
@@ -23,11 +23,11 @@
         <button v-if="meeting.participants.indexOf(username) < 0"
                 class="button-outline"
                 @click="$emit('attend', meeting)">
-          Zapisz się
+          Dołącz
         </button>
         <button v-else class="button-outline" @click="$emit('unattend', meeting)">Wypisz się</button>
         <button v-if="meeting.participants.length === 0" class="button" @click="$emit('delete', meeting)">
-          Usuń puste spotkanie
+          Usuń spotkanie bez uczestników
         </button>
       </td>
     </tr>
@@ -40,3 +40,4 @@
         props: ['meetings', 'username']
     }
 </script>
+
