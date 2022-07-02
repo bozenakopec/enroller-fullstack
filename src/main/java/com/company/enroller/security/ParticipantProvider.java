@@ -2,7 +2,7 @@ package com.company.enroller.security;
 
 import com.company.enroller.model.Participant;
 import com.company.enroller.persistence.ParticipantService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -12,9 +12,9 @@ import org.springframework.stereotype.Service;
 import java.util.Collections;
 
 @Service
+@RequiredArgsConstructor
 public class ParticipantProvider implements UserDetailsService {
-    @Autowired
-    private ParticipantService participantService;
+    private final ParticipantService participantService;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -24,4 +24,5 @@ public class ParticipantProvider implements UserDetailsService {
         }
         return new User(participant.getLogin(), participant.getPassword(), Collections.emptyList());
     }
+
 }

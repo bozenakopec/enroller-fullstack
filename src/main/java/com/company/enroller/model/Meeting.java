@@ -32,3 +32,7 @@ public class Meeting {
     @JsonIgnore
     @ManyToMany(mappedBy = "meetings")
     Set<Participant> participants = new HashSet<>();
+
+}
+
+

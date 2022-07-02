@@ -1,3 +1,8 @@
+package com.company.enroller.controllers;
+
+import com.company.enroller.model.Participant;
+import com.company.enroller.persistence.ParticipantService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -57,4 +62,3 @@ public class ParticipantRestController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
-
