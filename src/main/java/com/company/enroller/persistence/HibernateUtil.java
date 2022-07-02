@@ -1,11 +1,13 @@
 package com.company.enroller.persistence;
 
 
+import lombok.Getter;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
 
 public class HibernateUtil {
 
+    @Getter
     private static SessionFactory sessionFactory;
 
     static {
@@ -14,10 +16,6 @@ public class HibernateUtil {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    public static SessionFactory getSessionFactory() {
-        return sessionFactory;
     }
 
     public static void shutdown() {

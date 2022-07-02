@@ -1,21 +1,20 @@
 package com.company.enroller.persistence;
 
-import com.company.enroller.model.Meeting;
 import org.hibernate.Query;
 import org.springframework.stereotype.Component;
 
-import java.util.Collection;
+import java.util.List;
 
 @Component("meetingService")
 public class MeetingService {
 
-    DatabaseConnector connector;
+    private final DatabaseConnector connector;
 
     public MeetingService() {
         connector = DatabaseConnector.getInstance();
     }
 
-    public Collection<Meeting> getAll() {
+    public List getAll() {
         String hql = "FROM Meeting";
         Query query = connector.getSession().createQuery(hql);
         return query.list();
@@ -23,3 +22,4 @@ public class MeetingService {
 
 
 }
+

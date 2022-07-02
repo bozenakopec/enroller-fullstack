@@ -13,7 +13,7 @@ public class DatabaseConnector {
         return instance;
     }
 
-    private Session session;
+    private final Session session;
 
     private DatabaseConnector() {
         session = HibernateUtil.getSessionFactory().openSession();
@@ -29,4 +29,3 @@ public class DatabaseConnector {
         return session;
     }
 
-}

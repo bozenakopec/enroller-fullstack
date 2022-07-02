@@ -2,25 +2,23 @@ package com.company.enroller.persistence;
 
 import com.company.enroller.model.Participant;
 import org.hibernate.Transaction;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import java.util.Collection;
+import java.util.List;
 
 @Component("participantService")
 public class ParticipantService {
 
-    DatabaseConnector connector;
+    private final DatabaseConnector connector;
+    private final PasswordEncoder passwordEncoder;
 
-    @Autowired
-    PasswordEncoder passwordEncoder;
-
-    public ParticipantService() {
+    public ParticipantService(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
         connector = DatabaseConnector.getInstance();
     }
 
-    public Collection<Participant> getAll() {
+    public List getAll() {
         return connector.getSession().createCriteria(Participant.class).list();
     }
 
@@ -29,12 +27,19 @@ public class ParticipantService {
     }
 
     public Participant add(Participant participant) {
-        String hashedPassword = passwordEncoder.encode(participant.getPassword());
-        participant.setPassword(hashedPassword);
         Transaction transaction = connector.getSession().beginTransaction();
+        hashAndChangePassword(participant);
         connector.getSession().save(participant);
         transaction.commit();
         return participant;
+    }
+
+    private String encodePassword(String password) {
+        return passwordEncoder.encode(password);
+    }
+
+    private void hashAndChangePassword(Participant participant) {
+        participant.setPassword(encodePassword(participant.getPassword()));
     }
 
     public void update(Participant participant) {

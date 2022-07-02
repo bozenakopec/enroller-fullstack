@@ -1,8 +1,3 @@
-package com.company.enroller.controllers;
-
-import com.company.enroller.model.Participant;
-import com.company.enroller.persistence.ParticipantService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,15 +6,14 @@ import java.util.Collection;
 
 @RestController
 @RequestMapping("/api/participants")
+@RequiredArgsConstructor
 public class ParticipantRestController {
-
-    @Autowired
-    ParticipantService participantService;
+    private final ParticipantService participantService;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ResponseEntity<?> getAll() {
         Collection<Participant> participants = participantService.getAll();
-        return new ResponseEntity<Collection<Participant>>(participants, HttpStatus.OK);
+        return new ResponseEntity<>(participants, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
@@ -28,7 +22,7 @@ public class ParticipantRestController {
         if (participant == null) {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<Participant>(participant, HttpStatus.OK);
+        return new ResponseEntity<>(participant, HttpStatus.OK);
     }
 
     @RequestMapping(value = "", method = RequestMethod.POST)
@@ -39,7 +33,7 @@ public class ParticipantRestController {
                     HttpStatus.CONFLICT);
         }
         participantService.add(participant);
-        return new ResponseEntity<Participant>(participant, HttpStatus.CREATED);
+        return new ResponseEntity<>(participant, HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
@@ -49,7 +43,7 @@ public class ParticipantRestController {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
         participantService.delete(participant);
-        return new ResponseEntity<Participant>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
@@ -58,8 +52,9 @@ public class ParticipantRestController {
         if (participantService.findByLogin(login) != null) {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
-        updatedParticipant.setLogin(login); // in case of login!=updatedParticipant.getLogin()
+        updatedParticipant.setLogin(login);
         participantService.update(updatedParticipant);
-        return new ResponseEntity<Participant>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
+
